@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "f5102d4f",
+      "name": "🔍 LMS Health Check: Checking f",
+      "enabled": true,
+      "schedule": {
+        "kind": "every",
+        "atMs": null,
+        "everyMs": 120000,
+        "expr": null,
+        "tz": null
+      },
+      "payload": {
+        "kind": "agent_turn",
+        "message": "🔍 LMS Health Check: Checking for backend errors in the last 2 minutes...",
+        "deliver": true,
+        "channel": "webchat",
+        "to": "9d807b4f-bbef-4e22-8440-479a5216a7fa"
+      },
+      "state": {
+        "nextRunAtMs": 1774782874601,
+        "lastRunAtMs": 1774782733906,
+        "lastStatus": "ok",
+        "lastError": null,
+        "runHistory": [
+          {
+            "runAtMs": 1774781121906,
+            "status": "ok",
+            "durationMs": 43464,
+            "error": null
+          },
+          {
+            "runAtMs": 1774781285372,
+            "status": "ok",
+            "durationMs": 18006,
+            "error": null
+          },
+          {
+            "runAtMs": 1774781423381,
+            "status": "ok",
+            "durationMs": 27623,
+            "error": null
+          },
+          {
+            "runAtMs": 1774781571006,
+            "status": "ok",
+            "durationMs": 28696,
+            "error": null
+          },
+          {
+            "runAtMs": 1774781719704,
+            "status": "ok",
+            "durationMs": 15868,
+            "error": null
+          },
+          {
+            "runAtMs": 1774781855573,
+            "status": "ok",
+            "durationMs": 13400,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782009825,
+            "status": "ok",
+            "durationMs": 20443,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782150270,
+            "status": "ok",
+            "durationMs": 28628,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782298900,
+            "status": "ok",
+            "durationMs": 23032,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782441933,
+            "status": "ok",
+            "durationMs": 29017,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782590952,
+            "status": "ok",
+            "durationMs": 22952,
+            "error": null
+          },
+          {
+            "runAtMs": 1774782733906,
+            "status": "ok",
+            "durationMs": 20695,
+            "error": null
+          }
+        ]
+      },
+      "createdAtMs": 1774781001904,
+      "updatedAtMs": 1774782754601,
+      "deleteAfterRun": false
+    }
+  ]
+}

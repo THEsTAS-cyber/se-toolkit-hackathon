@@ -1,0 +1,110 @@
+[tool.uv.workspace]
+members = [
+  "backend",
+]
+
+[tool.uv.sources]
+# Добавляйте локальные пакеты сюда:
+# my-lib = { path = "libs/my-lib", editable = true }
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.42.1",
+  "pyright==1.1.408",
+  "pytest==9.0.2",
+  "pytest-asyncio==1.3.0",
+  "ruff==0.15.8",
+  "ty==0.0.26",
+]
+
+[tool.ruff]
+exclude = []
+
+[tool.ruff.lint]
+select = ["RET503"]
+
+[tool.poe.tasks]
+# Запуск сервера
+
+[tool.poe.tasks.dev]
+help = "Format, lint, typecheck, then run server"
+sequence = ["check", "dev-unsafe"]
+
+[tool.poe.tasks.dev-unsafe]
+help = "Run server without static analysis"
+cmd = "python -m app.run"
+
+# Статический анализ
+
+[tool.poe.tasks.check]
+help = "Format, lint, typecheck"
+sequence = ["format", "lint", "typecheck"]
+
+[tool.poe.tasks.typecheck]
+help = "Run all typecheckers"
+sequence = ["ty-check", "pyright-check"]
+
+[tool.poe.tasks.ty-check]
+help = "Run the 'ty' typechecker"
+cmd = "ty check"
+
+[tool.poe.tasks.pyright-check]
+help = "Run the 'pyright' typechecker"
+cmd = "pyright"
+
+[tool.poe.tasks.lint]
+help = "Run the 'ruff' linter"
+cmd = "ruff check"
+
+[tool.poe.tasks.format]
+help = "Run the 'ruff' formatter"
+cmd = "ruff format"
+
+# Тесты
+
+[tool.poe.tasks.test]
+help = "Run all tests"
+sequence = ["test-unit", "test-e2e"]
+
+[tool.poe.tasks.test-unit]
+help = "Run unit tests"
+cmd = "pytest backend/tests/unit"
+envfile = "backend/.env.tests.unit.secret"
+
+[tool.poe.tasks.test-e2e]
+help = "Run end-to-end tests"
+cmd = "pytest backend/tests/e2e"
+envfile = "backend/.env.tests.e2e.secret"
+
+# OpenAPI
+
+[tool.poe.tasks.export-openapi]
+help = "Export OpenAPI schema to openapi.json"
+cmd = "python scripts/export-openapi.py"
+env = { PYTHONPATH = "backend/src" }
+
+[tool.pyright]
+include = [
+  "backend",
+]
+extraPaths = [
+  "backend/src",
+]
+exclude = ["**/__pycache__", "**/node_modules", "**/.*", ".venv", ".direnv"]
+typeCheckingMode = "strict"
+reportAssignmentType = "none"
+reportIncompatibleVariableOverride = "none"
+reportUnknownMemberType = "none"
+reportMissingTypeStubs = "none"
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["backend/src"]
+asyncio_mode = "auto"
+
+[tool.ty.src]
+include = [
+  "backend",
+]
+
+[tool.ty.rules]

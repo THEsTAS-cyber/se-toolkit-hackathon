@@ -1,0 +1,40 @@
+:{$CADDY_CONTAINER_PORT} {
+    @public-utils-denied {
+        path /utils/pgadmin*
+        not remote_ip private_ranges
+    }
+    @unknown-utils {
+        path /utils/*
+        not path /utils/pgadmin*
+    }
+
+    respond @public-utils-denied "Forbidden" 403
+    respond @unknown-utils "Not Found" 404
+
+    # Backend API
+    handle /api/* {
+        reverse_proxy http://backend:{$BACKEND_CONTAINER_PORT}
+    }
+
+    # Nanobot WebSocket chat
+    handle /ws/chat {
+        reverse_proxy http://nanobot:8765
+    }
+
+    # User panel — everything else → Next.js frontend
+    handle {
+        reverse_proxy http://frontend-user:3000
+    }
+
+    handle /utils/pgadmin* {
+        reverse_proxy http://pgadmin:{$CONST_PGADMIN_CONTAINER_PORT}
+    }
+
+    # Swagger docs and OpenAPI — directly via backend
+    handle /docs* {
+        reverse_proxy http://backend:{$BACKEND_CONTAINER_PORT}
+    }
+    handle /openapi.json {
+        reverse_proxy http://backend:{$BACKEND_CONTAINER_PORT}
+    }
+}
